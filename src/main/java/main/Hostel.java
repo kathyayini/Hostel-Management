@@ -6,15 +6,23 @@ import java.io.*;
 import java.util.*;
 
 public class Hostel{
-	   public static void writedata()throws IOException {
+	   private static BufferedReader br;
+	private static String checkName;
+	private static Scanner sc;
+	private static Scanner sc2;
+	private static BufferedReader br2;
+	private static BufferedReader br3;
+
+
+	public static void writedata()throws IOException {
 		   BufferedWriter out = null;
            try{
             out = new BufferedWriter(new FileWriter("allotedhostel.txt"));
             try{
-	       		BufferedReader br = new BufferedReader(new FileReader("hostel.txt"));
+	       		br3 = new BufferedReader(new FileReader("hostel.txt"));
 	                   
 	            String line = null;
-	           while ((line = br.readLine()) != null) {
+	           while ((line = br3.readLine()) != null) {
 	               String[] splited = line.split("\\s+");
 	               	 out.write(splited[0]);
 	                 out.newLine();
@@ -32,17 +40,17 @@ public class Hostel{
 	   }
 	   public static boolean readData(String name) {
 		   try{
-	             BufferedReader br = new BufferedReader(new FileReader("hostel.txt"));
+	             br = new BufferedReader(new FileReader("hostel.txt"));
 	               String line = null;
-	            
-	               //write your code here !!!
 	               while ((line = br.readLine()) != null) {
 		               String[] splited = line.split("\\s+");
-		               String checkName = splited[0];
-		               //write your code here !!!
-//		               compare check name with name and return true if present and false if not
+		               checkName = splited[0];
+		               if(checkName==name)
+		               {
+		            	   return true;
+		               }
 	               }
-	               
+	                
 	               
 	            }catch(Exception e){
 	                System.out.println(e);
@@ -50,15 +58,19 @@ public class Hostel{
 			return true;
 	   }
        public static void allotHostel(){
-    	   //write your code here!!!
-    	   
+    	   try {
+    	   writedata();
+    	   }
+    	   catch(Exception e){
+               System.out.println(e);
+           }
        }
 
        public static boolean verifyStudent(int regNo){
          try{
-             BufferedReader br = new BufferedReader(new FileReader("hostel.txt"));
+             br2 = new BufferedReader(new FileReader("hostel.txt"));
                String line = null;
-            while ((line = br.readLine()) != null) {
+            while ((line = br2.readLine()) != null) {
                 String[] splited = line.split("\\s+");
 
                 String reg = Integer.toString(regNo);
@@ -71,18 +83,28 @@ public class Hostel{
             }
             return true;
         }
-           
+     
        public static boolean verifyName(String name){
+      try{
     	   boolean chk = true;
-    	   
-    	   //write your code here
-    	   
-    	   return chk;
+    	   readData(name);
+		if(checkName==name)
+    	   {
+    	     chk=false;
+    	     return chk;
+    	   }
+    	   else
+    	     return chk;
         }
-        
+      catch(Exception e){
+          System.out.println(e);
+      }
+         return true;
+       }
+       
 
 		static String typeName(){
-            Scanner sc = new Scanner(System.in);
+            sc = new Scanner(System.in);
             String name;
             System.out.println("Enter the student name:(Type exit to exit) ");
             name = sc.nextLine();
@@ -95,7 +117,7 @@ public class Hostel{
 
 
         BufferedWriter out = null;
-        Scanner sc = new Scanner(System.in);
+        sc2 = new Scanner(System.in);
         System.out.println("Hostel Management \n Enter the record of students! \n Type exit to end!");
         String name  = typeName();
         
@@ -103,8 +125,8 @@ public class Hostel{
 
             
             System.out.println("Enter the Reg No of the student");
-            int regNo = sc.nextInt();
-            sc.nextLine();
+            int regNo = sc2.nextInt();
+            sc2.nextLine();
             //verify Register number using a function verifyStudent
             boolean checkStu = verifyStudent(regNo);
             boolean checkName = verifyName(name);

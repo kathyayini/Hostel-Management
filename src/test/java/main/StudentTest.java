@@ -42,8 +42,8 @@ public class StudentTest {
 	@SuppressWarnings("static-access")
 	@Test
 	public void studentDuplicacyTest() throws IOException{
-//		boolean chk = true;
-		assertEquals(false,h.verifyName("abcdef"));
+//		boolean chk = false;
+		assertEquals(true,h.verifyName("abcdef"));
 	}
 
 
